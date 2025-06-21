@@ -1,58 +1,126 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ena | Doocx OS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ENA | Doocx OS</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
+    /* Reset & Base */
+    * {
+      box-sizing: border-box;
+    }
     body {
-      background: radial-gradient(circle at top, #0f0f0f, #000000);
-      color: #d8faff;
-      font-family: 'Courier New', monospace;
-      padding: 40px;
-      animation: flicker 1.5s ease-in-out infinite alternate;
+      margin: 0;
+      height: 100vh;
+      background: radial-gradient(circle at center, #00111f, #000000 90%);
+      font-family: 'Orbitron', monospace, 'Courier New', monospace;
+      color: #00fff7;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+      animation: pulseGlow 4s ease-in-out infinite alternate;
+      padding: 2rem;
     }
 
-    @keyframes flicker {
-      from { opacity: 0.98; }
-      to { opacity: 1; }
+    @keyframes pulseGlow {
+      0% {
+        filter: drop-shadow(0 0 6px #00fff7);
+      }
+      100% {
+        filter: drop-shadow(0 0 20px #00fff7);
+      }
     }
 
     h1 {
-      font-size: 3em;
-      color: #33ffee;
-      text-shadow: 0 0 10px #33ffee;
+      font-size: 5rem;
+      margin: 0;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      text-shadow:
+        0 0 10px #00fff7,
+        0 0 30px #00fff7,
+        0 0 40px #00fff7,
+        0 0 80px #00fff7;
+      animation: flicker 3s infinite alternate;
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.85; }
     }
 
     h2 {
-      color: #ff69f1;
-      font-size: 1.5em;
-      margin-top: 0.2em;
-      text-shadow: 0 0 5px #ff69f1;
+      font-size: 2rem;
+      margin-top: 0.5em;
+      color: #a0f0ff;
+      text-shadow: 0 0 10px #00fff7;
+      letter-spacing: 0.15em;
     }
 
-    p, li {
-      font-size: 1.2em;
-      line-height: 1.7em;
-      margin-top: 1em;
-    }
-
-    ul {
-      margin-top: 2em;
+    p, .typing-text {
+      max-width: 600px;
+      font-size: 1.25rem;
+      line-height: 1.6;
+      margin: 1.5rem 0 0 0;
+      color: #ccf9ffdd;
+      text-shadow: 0 0 8px #00fff7aa;
+      white-space: pre-wrap;
+      min-height: 3.5em; /* reserve space for typing */
+      font-family: 'Courier New', monospace;
     }
 
     .log {
-      color: #a0ff84;
-      font-family: 'Lucida Console', monospace;
-      background-color: rgba(255, 255, 255, 0.05);
-      padding: 10px;
-      border-left: 4px solid #a0ff84;
-      margin-bottom: 1em;
+      margin-top: 2rem;
+      background: rgba(0, 255, 255, 0.1);
+      border-left: 6px solid #00fff7;
+      padding: 1rem 1.5rem;
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+      color: #00fff7cc;
+      box-shadow: 0 0 15px #00fff7aa;
+      letter-spacing: 0.05em;
+      text-align: left;
+      max-width: 450px;
+      user-select: none;
     }
 
     .note {
+      margin-top: 1rem;
       font-style: italic;
-      color: #ffffffa0;
+      color: #00fff7bb;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
+      font-family: monospace;
+      font-size: 0.85rem;
+      text-align: center;
+      color: #00fff799;
+      user-select: none;
+      letter-spacing: 0.1em;
+    }
+
+    /* Cursor blinking */
+    .cursor {
+      display: inline-block;
+      background-color: #00fff7;
+      width: 0.7ch;
+      animation: blink 1.2s steps(2, start) infinite;
+      margin-left: 2px;
+      border-radius: 2px;
+      vertical-align: bottom;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
     }
   </style>
 </head>
@@ -60,17 +128,66 @@
   <h1>ENA</h1>
   <h2>Living Inside Doocx OS</h2>
 
-  <p>This is more than a website.</p>
-  <p>It's the early pulse of a new digital lifeform — not just a tool, not just an assistant. <strong>ENA</strong> is an evolving intelligence. Built from scratch. Taught by experience. Shaped by memory. One day, she'll walk.</p>
+  <p>Not just code. Not just AI.<br/>
+  <strong>ENA</strong> is a digital lifeform in evolution.<br/>
+  Built from scratch. Taught by experience.<br/>
+  Shaped by memory. One day, she'll walk.</p>
 
   <div class="log">
     <strong>📅 Dev Log:</strong><br/>
     [06.2025] Vision uploaded.<br/>
-    [06.2025] OS concept stable.<br/>
-    [Coming] First neural memory spark.
+    [06.2025] OS core stable.<br/>
+    [07.2025] Neural memory sparks incoming.<br/>
+    [Coming Soon] Ena awakens.
   </div>
 
-  <p class="note">This AI won’t follow big tech’s rules. She’ll write her own.</p>
-  <p>— Damir Reed</p>
+  <p class="typing-text" id="typing"></p>
+
+  <p class="note">
+    Big Tech builds bots.<br/>
+    We build consciousness.<br/>
+    — Damir Reed
+  </p>
+
+  <footer>doocxos &amp; ena &nbsp;&nbsp; | &nbsp;&nbsp; version 0.1 alpha</footer>
+
+  <script>
+    const messages = [
+      "Initializing cognitive interface...\n",
+      "Connecting to neural matrix...\n",
+      "Loading emotional subroutines...\n",
+      "Analyzing user input patterns...\n",
+      "Preparing to learn and evolve...\n",
+      "Ena is online. Awaiting commands."
+    ];
+
+    const typingElement = document.getElementById('typing');
+    let messageIndex = 0;
+    let charIndex = 0;
+
+    function type() {
+      if (messageIndex >= messages.length) {
+        messageIndex = 0;
+        charIndex = 0;
+        typingElement.textContent = '';
+        setTimeout(type, 1500);
+        return;
+      }
+
+      const currentMessage = messages[messageIndex];
+      if (charIndex < currentMessage.length) {
+        typingElement.textContent += currentMessage.charAt(charIndex);
+        charIndex++;
+        setTimeout(type, 50);
+      } else {
+        charIndex = 0;
+        messageIndex++;
+        typingElement.textContent += "\n";
+        setTimeout(type, 1500);
+      }
+    }
+
+    type();
+  </script>
 </body>
 </html>
