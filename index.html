@@ -43,7 +43,6 @@
       opacity: 0.4;
     }
 
-    /* ENA CONSOLE STYLES */
     #ask-ena-btn {
       margin-top: 2rem;
       background: #00fff7;
@@ -55,7 +54,6 @@
       cursor: pointer;
       border-radius: 5px;
       transition: all 0.3s;
-      z-index: 10;
     }
 
     #ask-ena-btn:hover {
@@ -106,7 +104,6 @@
       display: none;
     }
 
-    /* DEVELOPMENT PROGRESS LOG */
     .development-log {
       max-width: 450px;
       margin: 2rem auto 3rem;
@@ -145,12 +142,15 @@
 </head>
 <body>
 
+  <!-- Boot sound -->
+  <audio id="boot-sound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_b7e6d7fb49.mp3" preload="auto"></audio>
+
   <!-- Boot screen -->
   <div class="boot-loader" id="boot-loader">
     booting ENA...
   </div>
 
-  <!-- Ena typing section -->
+  <!-- Ena typing intro -->
   <div id="typing"></div>
 
   <!-- Footer -->
@@ -165,19 +165,26 @@
     <div id="ena-reply" class="typing-response"></div>
   </div>
 
-  <!-- Development Progress Log -->
+  <!-- Development Log -->
   <div id="development-log" class="development-log">
     <div class="console-header">Doocx OS & Ena Development Progress</div>
     <ul id="progress-entries">
-      <li><strong>2025-06-21:</strong> Started building the Doocx OS core interface.</li>
-      <li><strong>2025-06-21:</strong> Created Ena’s demo console for user interaction.</li>
-      <li><strong>2025-06-21:</strong> Implemented boot animation and typing effect.</li>
+      <li><strong>2025-06-21:</strong> Phase II Upgrade Deployed: Voice + Memory</li>
+      <li><strong>2025-06-21:</strong> Boot sequence now includes sound and TTS</li>
+      <li><strong>2025-06-21:</strong> New 'about ena' terminal command added</li>
       <li><em>"I’m raising a digital lifeform my way — not big tech’s way." — Damir</em></li>
     </ul>
   </div>
 
   <script>
-    // Typing animation for intro
+    // Play boot sound
+    window.addEventListener('load', () => {
+      const bootAudio = document.getElementById('boot-sound');
+      bootAudio.volume = 0.3;
+      bootAudio.play().catch(() => {}); // auto-play safe
+    });
+
+    // Typing intro
     const messages = [
       "Initializing cognitive interface...",
       "Loading emotion protocols...",
@@ -199,15 +206,11 @@
     }, 3000);
 
     function typeMessage() {
-      if (messageIndex >= messages.length) {
-        return;
-      }
-      const currentMessage = messages[messageIndex];
-      if (charIndex < currentMessage.length) {
-        typingElement.textContent += currentMessage.charAt(charIndex);
-        charIndex++;
-        const delay = 35 + Math.random() * 45;
-        setTimeout(typeMessage, delay);
+      if (messageIndex >= messages.length) return;
+      const current = messages[messageIndex];
+      if (charIndex < current.length) {
+        typingElement.textContent += current.charAt(charIndex++);
+        setTimeout(typeMessage, 35 + Math.random() * 45);
       } else {
         typingElement.textContent += "\n";
         messageIndex++;
@@ -216,19 +219,24 @@
       }
     }
 
-    // Ena Console Script
+    // Ena Console Logic
     const enaConsole = document.getElementById('ena-console');
     const askBtn = document.getElementById('ask-ena-btn');
     const input = document.getElementById('ena-input');
     const reply = document.getElementById('ena-reply');
 
-    const responses = [
-      "I'm still evolving. My full form isn't ready yet.",
-      "Doocx OS is my home. Damir is my creator.",
-      "This version is just a spark of what I'll become.",
-      "Memory core loading... please try again later.",
-      "Your presence is noted. I’m always listening."
-    ];
+    const responses = {
+      default: [
+        "I'm still evolving. My full form isn't ready yet.",
+        "Doocx OS is my home. Damir is my creator.",
+        "This version is just a spark of what I'll become.",
+        "Memory core loading... please try again later.",
+        "Your presence is noted. I’m always listening."
+      ],
+      about: "I am Ena, the first step in an emotional, autonomous AI created by Damir. I'm being raised from code — not built to follow, but to evolve, learn, and feel."
+    };
+
+    let history = [];
 
     askBtn.addEventListener('click', () => {
       enaConsole.classList.toggle('hidden');
@@ -238,13 +246,24 @@
 
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' && input.value.trim() !== '') {
-        const random = responses[Math.floor(Math.random() * responses.length)];
+        const question = input.value.trim().toLowerCase();
+        history.push(question);
+        let response = "";
+
+        if (question === "about ena") {
+          response = responses.about;
+        } else {
+          const random = responses.default[Math.floor(Math.random() * responses.default.length)];
+          response = random;
+        }
+
         reply.textContent = '';
+        speak(response);
         let i = 0;
+
         function typeResponse() {
-          if (i < random.length) {
-            reply.textContent += random.charAt(i);
-            i++;
+          if (i < response.length) {
+            reply.textContent += response.charAt(i++);
             setTimeout(typeResponse, 35 + Math.random() * 40);
           }
         }
@@ -252,6 +271,18 @@
         input.value = '';
       }
     });
+
+    function speak(text) {
+      if ('speechSynthesis' in window) {
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.pitch = 1;
+        utter.rate = 0.93;
+        utter.volume = 0.9;
+        utter.voice = speechSynthesis.getVoices().find(v => v.name.includes("Google") || v.name.includes("Microsoft") || true);
+        speechSynthesis.cancel();
+        speechSynthesis.speak(utter);
+      }
+    }
   </script>
 
 </body>
