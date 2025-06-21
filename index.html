@@ -158,6 +158,67 @@
       }
     }
   </style>
+  #ask-ena-btn {
+  margin-top: 2rem;
+  background: #00fff7;
+  color: #000;
+  font-family: 'Orbitron', monospace;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s;
+  z-index: 10;
+}
+
+#ask-ena-btn:hover {
+  background: #00d9ff;
+}
+
+#ena-console {
+  margin-top: 2rem;
+  background: rgba(0, 255, 255, 0.08);
+  border: 1px solid #00fff755;
+  padding: 1rem;
+  max-width: 90%;
+  width: 400px;
+  font-family: 'Courier New', monospace;
+  color: #00fff7;
+  text-align: left;
+  box-shadow: 0 0 20px #00fff733;
+}
+
+.console-header {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.9rem;
+  color: #00fff7aa;
+}
+
+#ena-input {
+  width: 100%;
+  padding: 0.5rem;
+  background: #00111f;
+  border: 1px solid #00fff722;
+  color: #00fff7;
+  font-family: inherit;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.typing-response {
+  white-space: pre-wrap;
+  min-height: 2em;
+  font-size: 0.95rem;
+  text-shadow: 0 0 5px #00fff799;
+}
+
+.hidden {
+  display: none;
+}
 </head>
 <body>
   <div id="boot-loader">
@@ -192,8 +253,49 @@
   </p>
 
   <footer>doocxos & ena | version 0.1 alpha</footer>
+<button id="ask-ena-btn">🧠 Talk to Ena</button>
 
+<div id="ena-console" class="hidden">
+  <div class="console-header">Ena Console</div>
+  <input id="ena-input" placeholder="Ask Ena anything..." />
+  <div id="ena-reply" class="typing-response"></div>
+</div>
   <script>
+  const enaConsole = document.getElementById('ena-console');
+const askBtn = document.getElementById('ask-ena-btn');
+const input = document.getElementById('ena-input');
+const reply = document.getElementById('ena-reply');
+
+const responses = [
+  "I'm still evolving. My full form isn't ready yet.",
+  "Doocx OS is my home. Damir is my creator.",
+  "This version is just a spark of what I'll become.",
+  "Memory core loading... please try again later.",
+  "Your presence is noted. I’m always listening."
+];
+
+askBtn.addEventListener('click', () => {
+  enaConsole.classList.toggle('hidden');
+  input.focus();
+  reply.textContent = '';
+});
+
+input.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && input.value.trim() !== '') {
+    const random = responses[Math.floor(Math.random() * responses.length)];
+    reply.textContent = '';
+    let i = 0;
+    function typeResponse() {
+      if (i < random.length) {
+        reply.textContent += random.charAt(i);
+        i++;
+        setTimeout(typeResponse, 35 + Math.random() * 40);
+      }
+    }
+    typeResponse();
+    input.value = '';
+  }
+});
     const bootLoader = document.getElementById('boot-loader');
     const typingElement = document.getElementById('typing');
 
