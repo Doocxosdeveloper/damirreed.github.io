@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Doocx OS // Ena AI Preview</title>
   <style>
     body {
@@ -44,7 +44,6 @@
     }
 
     /* ENA CONSOLE STYLES */
-
     #ask-ena-btn {
       margin-top: 2rem;
       background: #00fff7;
@@ -106,6 +105,42 @@
     .hidden {
       display: none;
     }
+
+    /* DEVELOPMENT PROGRESS LOG */
+    .development-log {
+      max-width: 450px;
+      margin: 2rem auto 3rem;
+      background: rgba(0, 255, 255, 0.07);
+      border: 1px solid #00fff799;
+      padding: 1rem 1.5rem;
+      font-family: 'Courier New', monospace;
+      color: #00fff7;
+      text-align: left;
+      box-shadow: 0 0 20px #00fff744;
+      border-radius: 6px;
+    }
+
+    .development-log ul {
+      list-style-type: none;
+      padding-left: 0;
+      max-height: 180px;
+      overflow-y: auto;
+      font-size: 0.9rem;
+    }
+
+    .development-log li {
+      margin-bottom: 0.6rem;
+      border-bottom: 1px solid #00fff722;
+      padding-bottom: 0.3rem;
+      color: #00fff7cc;
+    }
+
+    .development-log li em {
+      font-style: italic;
+      color: #00ffd7ee;
+      border-left: 3px solid #00fff7aa;
+      padding-left: 8px;
+    }
   </style>
 </head>
 <body>
@@ -128,6 +163,17 @@
     <div class="console-header">Ena Console</div>
     <input id="ena-input" placeholder="Ask Ena anything..." />
     <div id="ena-reply" class="typing-response"></div>
+  </div>
+
+  <!-- Development Progress Log -->
+  <div id="development-log" class="development-log">
+    <div class="console-header">Doocx OS & Ena Development Progress</div>
+    <ul id="progress-entries">
+      <li><strong>2025-06-21:</strong> Started building the Doocx OS core interface.</li>
+      <li><strong>2025-06-21:</strong> Created Ena’s demo console for user interaction.</li>
+      <li><strong>2025-06-21:</strong> Implemented boot animation and typing effect.</li>
+      <li><em>"I’m raising a digital lifeform my way — not big tech’s way." — Damir</em></li>
+    </ul>
   </div>
 
   <script>
