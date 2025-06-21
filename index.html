@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -39,6 +39,41 @@
     @keyframes ambientPulse {
       0% { opacity: 0.1; }
       100% { opacity: 0.18; }
+    }
+
+    /* Boot loader overlay */
+    #boot-loader {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, #000000, #00111f 90%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #00fff7;
+      font-family: 'Orbitron', monospace;
+      font-size: 2rem;
+      letter-spacing: 0.25em;
+      z-index: 1000;
+      flex-direction: column;
+      user-select: none;
+      pointer-events: none;
+      animation: fadeOut 1s ease forwards;
+      animation-delay: 6s;
+    }
+    #boot-loader .spinner {
+      margin-top: 1rem;
+      width: 3rem;
+      height: 3rem;
+      border: 4px solid #00fff7aa;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 1.2s linear infinite;
+    }
+    @keyframes fadeOut {
+      to { opacity: 0; visibility: hidden; }
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
 
     h1 {
@@ -116,7 +151,6 @@
       50% { opacity: 0; }
     }
 
-    /* Responsive tweaks */
     @media (max-width: 600px) {
       .log {
         font-size: 0.85rem;
@@ -126,6 +160,11 @@
   </style>
 </head>
 <body>
+  <div id="boot-loader">
+    BOOTING ENA...
+    <div class="spinner"></div>
+  </div>
+
   <h1>ENA</h1>
   <h2>Living Inside Doocx OS</h2>
 
@@ -155,7 +194,9 @@
   <footer>doocxos & ena | version 0.1 alpha</footer>
 
   <script>
+    const bootLoader = document.getElementById('boot-loader');
     const typingElement = document.getElementById('typing');
+
     const messages = [
       "Initializing cognitive interface...",
       "Connecting to neural matrix...",
@@ -165,35 +206,38 @@
       "Ena is online. Awaiting commands."
     ];
 
+    // Hide boot loader after 6s, then start typing
+    setTimeout(() => {
+      bootLoader.style.display = 'none';
+      typeMessage();
+    }, 6000);
+
     let messageIndex = 0;
     let charIndex = 0;
 
-    function type() {
+    function typeMessage() {
       if (messageIndex >= messages.length) {
         setTimeout(() => {
           typingElement.textContent = '';
           messageIndex = 0;
           charIndex = 0;
-          type();
+          typeMessage();
         }, 3000);
         return;
       }
-
       const currentMessage = messages[messageIndex];
       if (charIndex < currentMessage.length) {
         typingElement.textContent += currentMessage.charAt(charIndex);
         charIndex++;
         const delay = 35 + Math.random() * 45;
-        setTimeout(type, delay);
+        setTimeout(typeMessage, delay);
       } else {
         typingElement.textContent += "\n";
         messageIndex++;
         charIndex = 0;
-        setTimeout(type, 1200);
+        setTimeout(typeMessage, 1200);
       }
     }
-
-    type();
   </script>
 </body>
 </html>
