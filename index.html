@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,121 +7,69 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
 
-    /* Reset & Base */
     * {
       box-sizing: border-box;
     }
     body {
       margin: 0;
-      height: 100vh;
+      padding: 2rem;
       background: radial-gradient(circle at center, #00111f, #000000 90%);
-      font-family: 'Orbitron', monospace, 'Courier New', monospace;
+      font-family: 'Orbitron', monospace;
       color: #00fff7;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
       text-align: center;
-      overflow: hidden;
-      padding: 2rem;
+      min-height: 100vh;
+      overflow-x: hidden;
       position: relative;
     }
 
-    /* Ambient glow behind everything */
     body::before {
       content: '';
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      inset: 0;
       background: radial-gradient(circle at center, #00fff7 15%, transparent 70%);
-      opacity: 0.12;
+      opacity: 0.1;
       pointer-events: none;
       animation: ambientPulse 6s ease-in-out infinite alternate;
       z-index: 0;
     }
+
     @keyframes ambientPulse {
       0% { opacity: 0.1; }
       100% { opacity: 0.18; }
     }
 
-    @keyframes pulseGlow {
-      0% {
-        filter: drop-shadow(0 0 6px #00fff7);
-      }
-      100% {
-        filter: drop-shadow(0 0 20px #00fff7);
-      }
-    }
-
-    /* Glitch effect on ENA text */
-    @keyframes glitch {
-      0%, 100% {
-        clip-path: inset(0 0 0 0);
-        transform: translate(0);
-      }
-      20% {
-        clip-path: inset(10% 0 85% 0);
-        transform: translate(-2px, -2px);
-      }
-      40% {
-        clip-path: inset(85% 0 10% 0);
-        transform: translate(2px, 2px);
-      }
-      60% {
-        clip-path: inset(20% 0 65% 0);
-        transform: translate(-2px, 2px);
-      }
-      80% {
-        clip-path: inset(50% 0 35% 0);
-        transform: translate(2px, -2px);
-      }
-    }
-
     h1 {
-      font-size: 5rem;
+      font-size: clamp(2.5rem, 7vw, 5rem);
       margin: 0;
       letter-spacing: 0.3em;
       text-transform: uppercase;
-      text-shadow:
-        0 0 10px #00fff7,
-        0 0 30px #00fff7,
-        0 0 40px #00fff7,
-        0 0 80px #00fff7;
+      text-shadow: 0 0 10px #00fff7, 0 0 30px #00fff7, 0 0 40px #00fff7, 0 0 80px #00fff7;
       animation: flicker 3s infinite alternate, glitch 2.5s infinite;
-      position: relative;
-      z-index: 1;
-    }
-
-    @keyframes flicker {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.85; }
     }
 
     h2 {
-      font-size: 2rem;
-      margin-top: 0.5em;
+      font-size: clamp(1.2rem, 3vw, 2rem);
       color: #a0f0ff;
+      margin-top: 0.5em;
       text-shadow: 0 0 10px #00fff7;
-      letter-spacing: 0.15em;
     }
 
     p, .typing-text {
-      max-width: 600px;
-      font-size: 1.25rem;
+      max-width: 90%;
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
       line-height: 1.6;
-      margin: 1.5rem 0 0 0;
+      margin: 1.5rem 0 0;
       color: #ccf9ffdd;
       text-shadow: 0 0 8px #00fff7aa;
-      white-space: pre-wrap;
-      min-height: 3.5em; /* reserve space for typing */
       font-family: 'Courier New', monospace;
-      opacity: 0;
-      animation: fadeIn 1s forwards;
-      animation-delay: 1s;
+      white-space: pre-wrap;
     }
 
-    /* Fade-in text */
-    @keyframes fadeIn {
-      to { opacity: 1; }
+    .typing-text {
+      min-height: 4em;
     }
 
     .log {
@@ -129,73 +77,38 @@
       background: rgba(0, 255, 255, 0.1);
       border-left: 6px solid #00fff7;
       padding: 1rem 1.5rem;
-      font-family: 'Courier New', monospace;
-      font-size: 1rem;
-      color: #00fff7cc;
+      font-size: 0.95rem;
       box-shadow: 0 0 15px #00fff7aa;
-      letter-spacing: 0.05em;
       text-align: left;
+      width: 90%;
       max-width: 450px;
-      user-select: none;
-      animation: fadeIn 1s forwards;
-      animation-delay: 2s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Glitch flicker on log */
-    .log::before {
-      content: '';
-      position: absolute;
-      top: 10%;
-      left: 0;
-      width: 100%;
-      height: 6px;
-      background: #00fff7;
-      opacity: 0.12;
-      animation: glitchLine 2s infinite alternate;
-      pointer-events: none;
-    }
-
-    @keyframes glitchLine {
-      0% { opacity: 0.12; }
-      50% { opacity: 0.3; }
-      100% { opacity: 0.12; }
     }
 
     .note {
-      margin-top: 1rem;
+      margin-top: 1.5rem;
       font-style: italic;
       color: #00fff7bb;
-      opacity: 0;
-      animation: fadeIn 1s forwards;
-      animation-delay: 3s;
     }
 
     footer {
-      position: fixed;
-      bottom: 10px;
-      width: 100%;
-      font-family: monospace;
+      margin-top: auto;
       font-size: 0.85rem;
-      text-align: center;
       color: #00fff799;
-      user-select: none;
       letter-spacing: 0.1em;
-      opacity: 0;
-      animation: fadeIn 1s forwards;
-      animation-delay: 4s;
+      padding-top: 2rem;
     }
 
-    /* Cursor blinking */
-    .cursor {
-      display: inline-block;
-      background-color: #00fff7;
-      width: 0.7ch;
-      animation: blink 1.2s steps(2, start) infinite;
-      margin-left: 2px;
-      border-radius: 2px;
-      vertical-align: bottom;
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.85; }
+    }
+
+    @keyframes glitch {
+      0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+      20% { clip-path: inset(10% 0 85% 0); transform: translate(-2px, -2px); }
+      40% { clip-path: inset(85% 0 10% 0); transform: translate(2px, 2px); }
+      60% { clip-path: inset(20% 0 65% 0); transform: translate(-2px, 2px); }
+      80% { clip-path: inset(50% 0 35% 0); transform: translate(2px, -2px); }
     }
 
     @keyframes blink {
@@ -203,79 +116,45 @@
       50% { opacity: 0; }
     }
 
-    /* Boot loader overlay */
-    #boot-loader {
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(circle at center, #000000, #00111f 90%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #00fff7;
-      font-family: 'Orbitron', monospace;
-      font-size: 2rem;
-      letter-spacing: 0.25em;
-      z-index: 1000;
-      flex-direction: column;
-      user-select: none;
-      animation: fadeOut 1s ease forwards;
-      animation-delay: 6s;
-      pointer-events: none;
-    }
-
-    #boot-loader .spinner {
-      margin-top: 1rem;
-      width: 3rem;
-      height: 3rem;
-      border: 4px solid #00fff7aa;
-      border-top-color: transparent;
-      border-radius: 50%;
-      animation: spin 1.2s linear infinite;
-    }
-
-    @keyframes fadeOut {
-      to { opacity: 0; visibility: hidden; }
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    /* Responsive tweaks */
+    @media (max-width: 600px) {
+      .log {
+        font-size: 0.85rem;
+        padding: 1rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div id="boot-loader">
-    <div>BOOTING ENA...</div>
-    <div class="spinner"></div>
-  </div>
-
   <h1>ENA</h1>
   <h2>Living Inside Doocx OS</h2>
 
-  <p>Not just code. Not just AI.<br/>
-  <strong>ENA</strong> is a digital lifeform in evolution.<br/>
-  Built from scratch. Taught by experience.<br/>
-  Shaped by memory. One day, she'll walk.</p>
+  <p>
+    Not just code. Not just AI.<br>
+    <strong>ENA</strong> is a digital lifeform in evolution.<br>
+    Built from scratch. Taught by experience.<br>
+    Shaped by memory. One day, she'll walk.
+  </p>
 
   <div class="log">
-    <strong>📅 Dev Log:</strong><br/>
-    [06.2025] Vision uploaded.<br/>
-    [06.2025] OS core stable.<br/>
-    [07.2025] Neural memory sparks incoming.<br/>
+    <strong>📅 Dev Log:</strong><br>
+    [06.2025] Vision uploaded.<br>
+    [06.2025] OS core stable.<br>
+    [07.2025] Neural memory sparks incoming.<br>
     [Coming Soon] Ena awakens.
   </div>
 
   <p class="typing-text" id="typing"></p>
 
   <p class="note">
-    Big Tech builds bots.<br/>
-    We build consciousness.<br/>
+    Big Tech builds bots.<br>
+    We build consciousness.<br>
     — Damir Reed
   </p>
 
-  <footer>doocxos &amp; ena &nbsp;&nbsp; | &nbsp;&nbsp; version 0.1 alpha</footer>
+  <footer>doocxos & ena | version 0.1 alpha</footer>
 
   <script>
-    const bootLoader = document.getElementById('boot-loader');
     const typingElement = document.getElementById('typing');
     const messages = [
       "Initializing cognitive interface...",
@@ -289,42 +168,32 @@
     let messageIndex = 0;
     let charIndex = 0;
 
-    function typeChar() {
+    function type() {
       if (messageIndex >= messages.length) {
-        // Restart typing loop after delay
         setTimeout(() => {
           typingElement.textContent = '';
           messageIndex = 0;
           charIndex = 0;
-          typeChar();
+          type();
         }, 3000);
         return;
       }
 
       const currentMessage = messages[messageIndex];
       if (charIndex < currentMessage.length) {
-        // Type next char with random speed for smoothness
         typingElement.textContent += currentMessage.charAt(charIndex);
         charIndex++;
-        const delay = 30 + Math.random() * 50; // 30-80ms per char
-        setTimeout(typeChar, delay);
+        const delay = 35 + Math.random() * 45;
+        setTimeout(type, delay);
       } else {
-        // Pause before next message with fade effect
-        setTimeout(() => {
-          typingElement.textContent += '\n';
-          messageIndex++;
-          charIndex = 0;
-          typeChar();
-        }, 1800);
+        typingElement.textContent += "\n";
+        messageIndex++;
+        charIndex = 0;
+        setTimeout(type, 1200);
       }
     }
 
-    // Wait for boot loader fade then start typing
-    setTimeout(() => {
-      bootLoader.style.display = 'none';
-      typingElement.style.opacity = '1';
-      typeChar();
-    }, 6200);
+    type();
   </script>
 </body>
 </html>
